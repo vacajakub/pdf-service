@@ -1,0 +1,53 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "pdf server",
+            "type": "python",
+            "request": "launch",
+            "module": "pdf_service.main",
+            "justMyCode": false,
+            "env": {
+                "CONFFILE": "${workspaceFolder}/conf/pdf-service.env",
+                "TEMPLATE_PATH": "${workspaceFolder}/template"
+            }
+        },
+        {
+            "name": "karma - unit tests",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "justMyCode": false,
+            "args": ["tests/unit"],
+            "env": {
+                // don't send to sentry in tests
+                "SENTRY_DSN": "",
+                // local db provided by docker compose
+                "KARMA_DB_HOST": "172.17.0.1",
+                "KARMA_DB_SLAVE_PORT": "9432",
+                "KARMA_DB_MASTER_PORT": "9432",
+                "KARMA_DB_SLAVE_NAME": "karma",
+                "KARMA_DB_MASTER_NAME": "karma",
+                "CONFFILE": "${workspaceFolder}/conf/karma-server.env",
+                "TEMPLATE_PATH": "${workspaceFolder}/template"
+            },
+            "preLaunchTask": "Before tests",
+            "postDebugTask": "Stop pgdb for unit tests"
+        },
+        {
+            "name": "karma - deactivate records",
+            "type": "python",
+            "request": "launch",
+            "module": "server.maintenance.deactivate_records",
+            "justMyCode": false,
+            "env": {
+                "CONFFILE": "${workspaceFolder}/conf/karma-server.env",
+                "TEMPLATE_PATH": "${workspaceFolder}/template"
+            },
+            "preLaunchTask": "Generate config for local development"
+        }
+    ]
+}

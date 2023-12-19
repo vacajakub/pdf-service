@@ -1,0 +1,14 @@
+{
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": false,
+    "python.linting.banditEnabled": false,
+    "python.linting.pylintArgs": ["--disable=missing-docstring,too-few-public-methods"],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "coverage-gutters.showGutterCoverage": true
+}

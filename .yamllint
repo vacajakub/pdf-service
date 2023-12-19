@@ -1,0 +1,18 @@
+extends: default
+
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - '.yamllint'
+  - '*.yaml.tmpl'
+  - '*.yml.tmpl'
+
+ignore: |  # write files or directories to be ignored here
+rules:
+  line-length:
+    max: 120
+    ignore: |
+        test-docker-compose.yaml
+  document-start: false
+  new-lines: false
+  comments-indentation: disable

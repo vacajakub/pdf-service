@@ -1,0 +1,15 @@
+# ideally pip freeze or pipfile lock or poetry, now simple requirements.txt file
+fastapi
+pydantic
+pydantic-settings
+uvicorn[standard]
+gunicorn
+python-multipart
+pypdfium2
+pillow
+numpy
+starlette-context
+starlette
+psycopg[binary]
+psycopg_pool
+dramatiq[rabbitmq, watch]
