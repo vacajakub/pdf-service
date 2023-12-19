@@ -16,7 +16,7 @@
             }
         },
         {
-            "name": "karma - unit tests",
+            "name": "pdf server - unit tests",
             "type": "python",
             "request": "launch",
             "module": "pytest",
@@ -24,14 +24,13 @@
             "args": ["tests/unit"],
             "env": {
                 // don't send to sentry in tests
-                "SENTRY_DSN": "",
                 // local db provided by docker compose
                 "KARMA_DB_HOST": "172.17.0.1",
                 "KARMA_DB_SLAVE_PORT": "9432",
                 "KARMA_DB_MASTER_PORT": "9432",
                 "KARMA_DB_SLAVE_NAME": "karma",
                 "KARMA_DB_MASTER_NAME": "karma",
-                "CONFFILE": "${workspaceFolder}/conf/karma-server.env",
+                "CONFFILE": "${workspaceFolder}/conf/pdf-service.env",
                 "TEMPLATE_PATH": "${workspaceFolder}/template"
             },
             "preLaunchTask": "Before tests",

@@ -29,6 +29,8 @@ async def process_page(app_state: AppState, page: PdfPage, document_id: int, pag
     await insert_page(app_state.db_master, document_id, page_number, image_data)
 
 
+# I got my answer by phone after I already implemented linear normalization, so I keep it here
+# Without it, we just need to crop the page img to specified size
 def normalize_image(page_image: Image) -> Image:
     np_page = np.array(page_image)
     np_page = (np_page / (np_page.max() / 255.0)).astype(np.uint8)

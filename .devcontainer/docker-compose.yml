@@ -21,17 +21,10 @@ services:
       - POSTGRES_DB=pdf
       - PGPORT=9432
   rabbitmq:
-    image: docker.ops.iszn.cz/upstream/bitnami/rabbitmq:latest
+    image: rabbitmq:latest
     restart: unless-stopped
     ports:
       - 5672:5672
-      - 15672:15672
 
-    networks:
-      - rabbitmq_net
 volumes:
   postgres-data:
-
-networks:
-  rabbitmq_net:
-    driver: bridge

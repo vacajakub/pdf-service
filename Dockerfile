@@ -1,5 +1,4 @@
-#FROM python:3.9-slim
-FROM docker.ops.iszn.cz/baseimage/debian-python3:bullseye
+FROM python:3.9-slim
 
 WORKDIR /workspace
 

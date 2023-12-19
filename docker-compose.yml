@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace:cached
+    command: ["/app/env/bin/gunicorn", "--config", "/app/conf/gunicorn.conf.py", "pdf_service.main:app"]
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data-local:/var/lib/postgresql/data
+      - ./sql/:/docker-entrypoint-initdb.d/
+    environment:
+      - POSTGRES_USER=pdf
+      - POSTGRES_PASSWORD=pdf
+      - POSTGRES_DB=pdf
+      - PGPORT=9432
+    ports:
+      - "9432:9432"
+
+volumes:
+  postgres-data-local:

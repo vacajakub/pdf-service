@@ -38,6 +38,6 @@ class AppState(State):
         print("DB connected")
 
         # rabbit_broker = RabbitmqBroker(host=self.settings.rabbit_host, port=self.settings.rabbit_port)
-        # rabbit_broker = RabbitmqBroker()
+        # rabbit_broker = RabbitmqBroker(url="amqp://guest:guest@localhost:5672/")
         # dramatiq.set_broker(rabbit_broker)
         # print("Broker set")
