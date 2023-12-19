@@ -1,10 +1,10 @@
 import logging
 
-from fastapi import APIRouter, Path, UploadFile, Request, HTTPException, Response, BackgroundTasks
 import pypdfium2 as pdfium
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Path, Request, Response, UploadFile
 from starlette import status
 
-from pdf_service.dao.crud import insert_document, get_document_db, get_page_data
+from pdf_service.dao.crud import get_document_db, get_page_data, insert_document
 from pdf_service.pdf_utils import process_document
 from pdf_service.schemas import GetDocumentResponse, UploadDocumentResponse
 
@@ -31,8 +31,9 @@ async def upload_file(request: Request, file: UploadFile, background_tasks: Back
     except Exception as e:
         print(e)
         logger.error("Error while uploading document: %s", e)
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                            detail="Failed to upload document") from e
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to upload document"
+        ) from e
 
 
 @router.get("/documents/{document_id}", response_model=GetDocumentResponse)

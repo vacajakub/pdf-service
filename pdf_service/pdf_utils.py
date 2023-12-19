@@ -2,7 +2,6 @@ import io
 
 import numpy as np
 from PIL import Image
-
 from pypdfium2 import PdfDocument, PdfPage
 
 from pdf_service.app_state import AppState

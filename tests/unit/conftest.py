@@ -9,4 +9,3 @@ def test_app():
     # need to run inside 'with' so startup and shutdown event registers
     with TestClient(app) as client:
         yield client
-

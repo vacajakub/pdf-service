@@ -6,7 +6,7 @@ from psycopg_pool import AsyncConnectionPool
 from pydantic_settings import BaseSettings
 from starlette.datastructures import State
 
-from .config import get_settings
+from pdf_service.config import get_settings
 
 
 def get_db_connection_str(settings: BaseSettings, read_only=False) -> str:
