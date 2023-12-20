@@ -48,7 +48,7 @@ Alternatively you can call endpoints via curl:
 Upload document:
 
 ```
-curl -F "file=@{local_path_to_pdf}.pdf" --location 'http://localhost:8000/documents/'
+curl -F "file=@{local_path_to_pdf}" --location 'http://localhost:8000/documents/'
 ```
 
 Get document status:
