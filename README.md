@@ -23,7 +23,7 @@ I left comments throughout code in places that I would do differently if it shou
 
 Run in docker compose by running `docker compose up -d --build`
 
-Build docker compose by `docker-compose build`, then run it by `docker-compose up -d`.
+Build docker compose by `docker compose build`, then run it by `docker compose up -d`.
 
 In case of changes to code, run `docker compose up -d --build`
 

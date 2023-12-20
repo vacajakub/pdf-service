@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace:cached
+    command: ["/app/env/bin/gunicorn", "--config", "/app/conf/gunicorn.conf.py", "pdf_service.main:app"]
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - ./sql/:/docker-entrypoint-initdb.d/
+    environment:
+      - POSTGRES_USER=pdf
+      - POSTGRES_PASSWORD=pdf
+      - POSTGRES_DB=pdf
+      - PGPORT=9432
+    ports:
+      - "9432:9432"
+  test:
+    build:
+      context: ./
+      dockerfile: Dockerfile.test
+    user: 1002:1002
+    environment:
+      - SKIP_ELASTIC=true
+      - DB_HOST=db
+      - DB_PASSWORD=pdf
+      - DB_MASTER_NAME=pdf
+      - DB_SLAVE_NAME=pdf
+      - DB_USER=pdf
+      - DB_MASTER_PORT=9432
+      - DB_SLAVE_PORT=9432
+      - DB_APP_NAME=pdf
+      - IMAGE_MAX_WIDTH=1200
+      - IMAGE_MAX_HEIGHT=1600
+    volumes:
+      - ./:/test-result
+    depends_on:
+      - db
+      - app
+    command: ["python3", "-m", "pytest", "-v", "tests/integration"]

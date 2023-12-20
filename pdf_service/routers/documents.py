@@ -14,7 +14,9 @@ logger = logging.getLogger("pdf-service.documents")
 
 # normally add checks to file size, format etc., depends on if it is an internal service or not
 @router.post("/documents/", response_model=UploadDocumentResponse)
-async def upload_document(request: Request, file: UploadFile, background_tasks: BackgroundTasks):
+async def upload_document(
+    request: Request, file: UploadFile, background_tasks: BackgroundTasks
+) -> UploadDocumentResponse:
     # checks for parsable pdf or check if its even pdf (omitted in this assigment)
     # also zip bombs and other nice stuff
     pdf = pdfium.PdfDocument(await file.read())
@@ -44,7 +46,7 @@ async def upload_document(request: Request, file: UploadFile, background_tasks: 
 
 
 @router.get("/documents/{document_id}", response_model=GetDocumentResponse)
-async def get_document(request: Request, document_id: int = Path(gt=0)):
+async def get_document(request: Request, document_id: int = Path(gt=0)) -> GetDocumentResponse:
     res = await get_document_db(request.app.state.db_slave, document_id)
     if res:
         return GetDocumentResponse(status=res["status"], n_pages=res["n_pages"])

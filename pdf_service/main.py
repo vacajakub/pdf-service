@@ -24,7 +24,6 @@ app.include_router(internal.router)
 async def startup_event():
     logger = logging.getLogger("pdf-service")
     await app.state.setup()
-    print("started")
     logger.info("Started")
 
 

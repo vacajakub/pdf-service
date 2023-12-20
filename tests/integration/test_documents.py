@@ -1,19 +1,18 @@
-import pytest
-
-# spin up different docker compose for test, with server container, db container and test containter
+# spin up different docker compose for test (test-docker-compose.yml)
+# with server container, db container and test container
 # which will fire requests (this)
 # we can use fixtures to insert some data before test into db
 
 
 def test_upload_document_simple(test_app):
+    with open("../data/sample_pdf.pdf", mode="rb") as file:
+        pdf_data = file.read()
 
-    response = test_app.get("/history/")
-    assert response.status_code == 200
-    data = response.json()
-    assert len(data["items"]) != 0
-    for record in data["items"]:
-        for key in ("title", "type", "createTime"):
-            assert key in record
+        response = test_app.post("/documents/", data=pdf_data, headears={"'Content-Type': 'application/octet-stream'"})
+        assert response.status_code == 200
+        data = response.json()
+        assert data.get("id")
+        assert data["id"] > 0
 
 
 # tests of simple call os API, we should always test nonsense arguments, like document id < 0

@@ -1,8 +1,12 @@
+import logging
+
 from psycopg_pool import AsyncConnectionPool
 from pydantic_settings import BaseSettings
 from starlette.datastructures import State
 
 from pdf_service.config import get_settings
+
+logger = logging.getLogger("pdf-service.app_state")
 
 
 def get_db_connection_str(settings: BaseSettings, read_only=False) -> str:
@@ -31,7 +35,7 @@ class AppState(State):
         # so reads on slave, other on master
         self.db_master = create_db_connection(self.settings)
         self.db_slave = create_db_connection(self.settings, True)
-        print("DB connected")
+        logger.info("DB connected")
 
         # if we were to set up a broker, we would do it here
         # also here we could set up loggin levels, etc.

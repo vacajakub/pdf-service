@@ -1,0 +1,26 @@
+FROM python:3.9-slim
+
+WORKDIR /workspace
+
+ADD requirements.txt ./
+
+RUN python3 -m venv /app/env && \
+    /app/env/bin/pip install --upgrade pip && \
+    /app/env/bin/pip install -U -r requirements.txt && \
+    pytest==7.4.3 \
+    httpx==0.23.0
+
+ADD pdf_service ./pdf_service
+COPY tests ./tests
+
+ADD conf /app/conf/
+
+WORKDIR /workspace
+
+RUN chmod 777 /workspace
+RUN chmod 777 /app
+RUN chmod -R 777 /app/conf
+RUN chmod -R 777 /workspace/tests
+
+
+CMD ["python3", "-m", "pytest", "-v", "tests/integration"]
