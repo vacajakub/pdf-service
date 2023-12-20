@@ -1,7 +1,3 @@
-import asyncio
-
-import dramatiq
-from dramatiq.brokers.rabbitmq import RabbitmqBroker
 from psycopg_pool import AsyncConnectionPool
 from pydantic_settings import BaseSettings
 from starlette.datastructures import State
@@ -37,7 +33,5 @@ class AppState(State):
         self.db_slave = create_db_connection(self.settings, True)
         print("DB connected")
 
-        # rabbit_broker = RabbitmqBroker(host=self.settings.rabbit_host, port=self.settings.rabbit_port)
-        # rabbit_broker = RabbitmqBroker(url="amqp://guest:guest@localhost:5672/")
-        # dramatiq.set_broker(rabbit_broker)
-        # print("Broker set")
+        # if we were to set up a broker, we would do it here
+        # also here we could set up loggin levels, etc.

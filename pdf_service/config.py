@@ -17,8 +17,6 @@ class Settings(BaseSettings):
     db_app_name: str = "pdf"
     image_max_width: int = 1200
     image_max_height: int = 1600
-    rabbit_host: str
-    rabbit_port: int
 
     class Config:
         env_file = CONF_FILE

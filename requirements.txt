@@ -1,15 +1,14 @@
 # ideally pip freeze or pipfile lock or poetry, now simple requirements.txt file
-fastapi
-pydantic
-pydantic-settings
+fastapi==0.105.0
+pydantic==2.5.2
+pydantic-settings==2.1.0
+gunicorn==21.2.0
 uvicorn[standard]
-gunicorn
 python-multipart
-pypdfium2
-pillow
+pypdfium2==4.25.0
+pillow==10.1.0
 numpy
-starlette-context
-starlette
-psycopg[binary]
-psycopg_pool
-dramatiq[rabbitmq, watch]
+starlette-context==0.3.6
+starlette==0.27.0
+psycopg[binary]==3.1.16
+psycopg_pool==3.2.0

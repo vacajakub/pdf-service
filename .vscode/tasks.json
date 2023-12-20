@@ -1,33 +1,4 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Install (editable mode)",
-            "type": "shell",
-            "command": "pip3 install -ve ./",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Before tests",
-            "dependsOn": ["Generate config for local test", "Start pgdb for unit tests"]
-        },
-        {
-            "type": "shell",
-            "label": "Start pgdb for unit tests",
-            "command": "docker-compose -f docker-compose-unit-tests-pg.yml up -d",
-            "presentation": {
-                "reveal": "always"
-            }
-        },
-        {
-            "type": "shell",
-            "label": "Stop pgdb for unit tests",
-            "command": "docker-compose -f docker-compose-unit-tests-pg.yml down"
-        }
-    ]
+    "tasks": []
 }

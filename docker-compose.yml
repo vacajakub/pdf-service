@@ -26,5 +26,6 @@ services:
     ports:
       - "9432:9432"
 
+# to preserve db data between builds
 volumes:
   postgres-data-local:

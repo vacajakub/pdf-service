@@ -18,6 +18,8 @@ async def insert_document(db: AsyncConnectionPool, num_pages: int) -> int:
 
 # !!! normally image should be saved in CDN and only an url in db !!! this is only for the assignment
 async def insert_page(db: AsyncConnectionPool, document_id: int, page_number: int, image_data: io.BytesIO):
+    # ON CONFLICT DO NOTHING because of potentional retries from background workers
+    # also possible to update the image data on conflict, so presuming the latest call would have the right data
     async with db.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(

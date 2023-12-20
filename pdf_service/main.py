@@ -4,7 +4,7 @@ import logging
 from fastapi import FastAPI
 
 from pdf_service.app_state import AppState
-from pdf_service.routers import documents
+from pdf_service.routers import documents, internal
 
 tags_metadata = [
     {
@@ -15,25 +15,25 @@ tags_metadata = [
 
 app = FastAPI(title="PDF service", description="Server for rendering of PDFs", openapi_tags=tags_metadata)
 app.state = AppState()
+# this would be a Flask blueprints - basically the same
 app.include_router(documents.router)
+app.include_router(internal.router)
 
 
 @app.on_event("startup")
 async def startup_event():
     logger = logging.getLogger("pdf-service")
     await app.state.setup()
+    print("started")
     logger.info("Started")
-    print("Started")
 
 
 @app.on_event("shutdown")
 async def shutdown():
     logger = logging.getLogger("pdf-service")
     logger.info("Shutting down")
-    print("Shutdown")
-    # close pools
+    # don't forget to close pools :)
     await asyncio.gather(app.state.db_master.close(), app.state.db_slave.close())
-    print("Shutdown end")
     logger.info("Shutdown end")
 
 

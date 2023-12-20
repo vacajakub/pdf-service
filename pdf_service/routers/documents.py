@@ -14,7 +14,7 @@ logger = logging.getLogger("pdf-service.documents")
 
 # normally add checks to file size, format etc., depends on if it is an internal service or not
 @router.post("/documents/", response_model=UploadDocumentResponse)
-async def upload_file(request: Request, file: UploadFile, background_tasks: BackgroundTasks):
+async def upload_document(request: Request, file: UploadFile, background_tasks: BackgroundTasks):
     # checks for parsable pdf or check if its even pdf (omitted in this assigment)
     # also zip bombs and other nice stuff
     pdf = pdfium.PdfDocument(await file.read())
@@ -25,6 +25,13 @@ async def upload_file(request: Request, file: UploadFile, background_tasks: Back
 
     try:
         document_id = await insert_document(request.app.state.db_master, num_pages)
+
+        # I went with background_task, it is also off loading work and does not block execution
+        # It is a little less scalable solutions, since you do not run workers and queue in different docker container
+        # but it doest the job
+        # with dramatiq, function process_document would be dramatiq.actor, but only with json encodable args
+        # so process_document.send()
+        # db conn would have to be acquired in function, not passed as argument
         background_tasks.add_task(process_document, request.app.state, pdf, document_id)
 
         return UploadDocumentResponse(id=document_id)
