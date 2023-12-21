@@ -4,11 +4,13 @@
 # we can use fixtures to insert some data before test into db
 
 
-def test_upload_document_simple(test_app):
+def test_upload_document_simple(test_app, api_url):
     with open("../data/sample_pdf.pdf", mode="rb") as file:
         pdf_data = file.read()
 
-        response = test_app.post("/documents/", data=pdf_data, headears={"'Content-Type': 'application/octet-stream'"})
+        response = test_app.post(
+            f"{api_url}/documents/", data=pdf_data, headears={"'Content-Type': 'application/octet-stream'"}
+        )
         assert response.status_code == 200
         data = response.json()
         assert data.get("id")
@@ -17,18 +19,18 @@ def test_upload_document_simple(test_app):
 
 # tests of simple call os API, we should always test nonsense arguments, like document id < 0
 # or non-existing id and test to expect 404
-def test_get_document_simple(test_app):
+def test_get_document_simple(test_app, api_url):
     assert True
 
 
 # tests of simple call os API, we should always test nonsense arguments, like document id < 0
 # or non-existing page_id and test to expect 404
-def test_get_page_simple(test_app):
+def test_get_page_simple(test_app, api_url):
     assert True
 
 
-def test_get_non_existing_id(test_app):
-    response = test_app.get("/documents/9999/pages/9999")
+def test_get_non_existing_id(test_app, api_url):
+    response = test_app.get(f"{api_url}/documents/9999/pages/9999")
     assert response.status_code == 404
 
 
@@ -36,7 +38,7 @@ def test_get_non_existing_id(test_app):
 # 1 - insert document
 # 2 - check status
 # 3 - retrieve pages
-# 4 - ideally compare them to precomputed results
+# 4 - ideally compare images to precomputed results
 # alternatively upload big document and loop on check status, until it switches into processed, then retrieve pages
-def test_upload_file(test_app):
+def test_upload_file(test_app, api_url):
     assert True

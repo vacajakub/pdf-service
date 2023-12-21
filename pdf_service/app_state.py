@@ -10,6 +10,7 @@ logger = logging.getLogger("pdf-service.app_state")
 
 
 def get_db_connection_str(settings: BaseSettings, read_only=False) -> str:
+    # also possible to set pool sizes etc.
     return f"""
             dbname={settings.db_slave_name if read_only else settings.db_master_name}
             user={settings.db_user}

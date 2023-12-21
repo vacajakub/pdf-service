@@ -41,6 +41,7 @@ services:
       - DB_APP_NAME=pdf
       - IMAGE_MAX_WIDTH=1200
       - IMAGE_MAX_HEIGHT=1600
+      - TEST_API_URL=http://app:8000
     volumes:
       - ./:/test-result
     depends_on:
